@@ -72,10 +72,10 @@ mod tests {
     use super::ExtendWithResponseFile;
 
     fn write_response_file(content: &String) -> Result<(String, TempDir)> {
-        let tmp_dir = try!(TempDir::new("cpp-codegen"));
+        let tmp_dir = TempDir::new("cpp-codegen")?;
         let response_file_path = tmp_dir.path().join("interface.rsp");
-        let mut response_file = try!(File::create(&response_file_path));
-        try!(response_file.write(content.as_bytes()));
+        let mut response_file = File::create(&response_file_path)?;
+        response_file.write(content.as_bytes())?;
         Ok((response_file_path.to_string_lossy().into_owned().to_string(), tmp_dir))
     }
 
