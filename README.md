@@ -79,19 +79,25 @@ In order to perform the actual compilation, cpp-codegen-rs is invoked with the f
 ``` bash
 cpp_codegen interface.h -t templates/gmock.hbs
 ```
-
 Generated code is written to stdout.
+
+#### or
+
+``` bash
+cpp_codegen interface.h -o output.h -t templates/gmock.hbs
+```
+Generated code is written to specified file.
 
 Building
 ------------
-- Windows
-    1. Install [LLVM](https://github.com/llvm/llvm-project/releases).
-    2. Clone the repo `git clone ...`
-    3. Navigate to repo folder `cd cpp-codegen-rs`
-    4. Build it with *Cargo* `cargo build`
+#### Windows
+1. Install [LLVM](https://github.com/llvm/llvm-project/releases).
+2. Clone the repo `git clone ...`
+3. Navigate to repo folder `cd cpp-codegen-rs`
+4. Build it with *Cargo* `cargo build`
 
-- Linux
-    *-TBD-*
+#### Linux
+- *-TBD-*
 
 Distribution
 ------------
