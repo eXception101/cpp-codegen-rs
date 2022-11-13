@@ -12,6 +12,6 @@ pub fn len(h: &Helper,
     };
 
     let rendered = format!("{}", length);
-    try!(rc.writer.write(rendered.into_bytes().as_ref()));
+    let _ = rc.writer.write(rendered.into_bytes().as_ref());
     Ok(())
 }

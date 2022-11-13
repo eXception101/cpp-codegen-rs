@@ -10,7 +10,6 @@ extern crate rand;
 #[cfg(test)]
 extern crate tempdir;
 
-#[macro_use]
 extern crate log;
 extern crate env_logger;
 
@@ -19,7 +18,6 @@ use clang::{Clang, Index};
 use handlebars::Handlebars;
 
 use std::path::Path;
-use std::error::Error;
 use std::boxed::Box;
 use std::env;
 
@@ -61,7 +59,7 @@ fn main() {
 
     let tu = match index.parser(input).arguments(&clang_flags).parse() {
         Ok(x) => x,
-        Err(e) => panic!(format!("{:?}", e)),
+        Err(e) => panic!("{:?}", e),
     };
     let model = model::Model::new(&tu);
 
@@ -71,11 +69,11 @@ fn main() {
     handlebars.register_helper("len", Box::new(template::len));
 
     match handlebars.register_template_file("template", &Path::new(template_file_name)) {
-        Err(e) => panic!(format!("{:?}", e)),
+        Err(e) => panic!("{:?}", e),
         _ => (),
     };
 
     let output = handlebars.render("template", &model)
-        .unwrap_or_else(|e| e.description().to_owned());
+        .unwrap_or_else(|e| e.to_string().to_owned());
     println!("{}", output);
 }
