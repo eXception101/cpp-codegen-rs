@@ -72,7 +72,7 @@ fn parse_methods(node: Entity) -> Vec<Method> {
 fn parse_method(node: Entity) -> Method {
     Method {
         name: node.get_name().unwrap(),
-        return_type: "void".to_string(),
+        return_type: node.get_type().unwrap().get_result_type().unwrap().get_display_name(),
         arguments: parse_arguments(node),
         template_arguments: parse_template_parameters(node),
     }
