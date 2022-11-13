@@ -67,6 +67,7 @@ fn main() {
 
     let mut handlebars = Handlebars::new();
     handlebars.register_helper("len", Box::new(template::len));
+    handlebars.register_escape_fn(|s| -> String { return s.to_string(); });
 
     match handlebars.register_template_file("template", &Path::new(template_file_name)) {
         Err(e) => panic!("{:?}", e),
