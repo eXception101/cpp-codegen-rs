@@ -82,6 +82,17 @@ cpp_codegen interface.h -t templates/gmock.hbs
 
 Generated code is written to stdout.
 
+Building
+------------
+- Windows
+    1. Install [LLVM](https://github.com/llvm/llvm-project/releases).
+    2. Clone the repo `git clone ...`
+    3. Navigate to repo folder `cd cpp-codegen-rs`
+    4. Build it with *Cargo* `cargo build`
+
+- Linux
+    *-TBD-*
+
 Distribution
 ------------
 My goal is to supply statically linked (against libclang) release
