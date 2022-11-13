@@ -17,9 +17,11 @@ use clang::{Clang, Index};
 
 use handlebars::Handlebars;
 
+use std::io::Write;
 use std::path::Path;
 use std::boxed::Box;
 use std::env;
+use std::fs::File;
 
 mod model;
 mod template;
@@ -76,5 +78,18 @@ fn main() {
 
     let output = handlebars.render("template", &model)
         .unwrap_or_else(|e| e.to_string().to_owned());
-    println!("{}", output);
+
+    match matches.value_of("OUTPUT") {
+        None => println!("{}", output),
+        Some(val) => {
+            let output_file = File::create(val);         
+            let mut file = match output_file {
+                Err(error) => panic!("Problem opening the file: {:?}", error),
+                Ok(file) =>  file,
+            };
+            
+            let _ = file.write_all(output.as_bytes());
+        },
+    };
+    
 }

@@ -20,6 +20,12 @@ pub fn build_argument_parser<'a, 'b>() -> App<'a, 'b> {
         .arg(Arg::with_name("INPUT")
             .help("C++ interface to use as model")
             .required(true))
+        .arg(Arg::with_name("OUTPUT")
+            .short("o")
+            .long("output")
+            .help("Output file")
+            .takes_value(true)
+            .required(false))
         .arg(Arg::with_name("FLAGS")
             .help("Compiler flags needed to parse the input file")
             .required(false)
@@ -53,8 +59,16 @@ fn should_parse_template_arguments() {
 #[test]
 fn should_recognize_compiler_flags() {
     let m = build_argument_parser()
-        .get_matches_from(vec!["", "interface.h", "-t", "foobar", "--", "-DFOO", "-DBAR"]);
+        .get_matches_from(vec!["", "interface.h", "-o", "output.h", "-t", "foobar", "--", "-DFOO", "-DBAR"]);
     println!("{:?}", m);
     assert_eq!(m.values_of("FLAGS").unwrap().collect::<Vec<_>>(),
                ["-DFOO", "-DBAR"]);
+}
+
+#[test]
+fn should_parse_output_file() {
+    let m = build_argument_parser()
+        .get_matches_from(vec!["", "interface.h", "-o", "output.h", "-t", "foobar", "--", "-DFOO", "-DBAR"]);
+    println!("{:?}", m);
+    assert_eq!(m.value_of("OUTPUT"), Option::Some("output.h"));
 }
