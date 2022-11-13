@@ -32,12 +32,14 @@ fn build_model(model: &mut Model, node: Entity, parent: Entity) -> EntityVisitRe
         EntityKind::StructDecl |
         EntityKind::ClassDecl |
         EntityKind::ClassTemplate => {
-            model.interfaces.push(Interface {
-                name: node.get_name().unwrap(),
-                namespaces: parse_namespaces(parent),
-                methods: parse_methods(node),
-                template_parameters: parse_template_parameters(node),
-            });
+            if node.is_definition() {
+                model.interfaces.push(Interface {
+                    name: node.get_name().unwrap(),
+                    namespaces: parse_namespaces(parent),
+                    methods: parse_methods(node),
+                    template_parameters: parse_template_parameters(node),
+                });
+            }
             EntityVisitResult::Continue
         }
         _ => EntityVisitResult::Recurse,
